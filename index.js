@@ -15,7 +15,6 @@ const TELEGRAM_CHAT_ID = '754544480';
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.run(host='0.0.0.0', port=port)
 // настроить разрешенные домены
 
 // Обработка POST запроса с формы
