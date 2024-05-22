@@ -4,7 +4,7 @@ const axios = require('axios');
 const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // Ваш токен Telegram Bot и ID чата
 const TELEGRAM_BOT_TOKEN = '6904470937:AAGR2b495cT_PpLCycddClMZs52QyHobk_0';
