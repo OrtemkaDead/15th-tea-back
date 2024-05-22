@@ -44,7 +44,7 @@ app.post('/send-data', (req, res) => {
         }))
     )
     
-    res.status(200);
+    res.status(200).send('OK');
 });
 
 app.listen(port, () => {
