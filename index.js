@@ -14,18 +14,36 @@ const TELEGRAM_CHAT_ID_ULIA = '6507907137';
 const ids = [
     TELEGRAM_CHAT_ID_ARTEM,
     TELEGRAM_CHAT_ID_ULIA,
-]
+];
+
+let submissions = []; // Для хранения данных о пользователях
 
 // Middleware для парсинга тела запроса
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-// настроить разрешенные домены
+// TODO: настроить разрешенные домены
 
 // Обработка POST запроса с формы
 app.post('/send-data', (req, res) => {
     const { fullName, phone, email } = req.body;
 
+    // Проверка на дубликат
+    const isDuplicate = submissions.some((submission) => {
+        return (
+          submission.email === email || 
+          submission.phone === phone
+        );
+    });
+
+    if (isDuplicate) {
+        return res.status(400).send('Duplicate submission');
+    }
+
+    // Сохранение данных
+    submissions.push({ fullName, email, phone });
+
+    // Сообщение для бота
     const message = `
         Новая заявка с лендинга чайной:
         ФИО: ${fullName}
