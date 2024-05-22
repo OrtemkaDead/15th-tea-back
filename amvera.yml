@@ -10,6 +10,5 @@ build:
     '*': /
 run:
   scriptName: index.js
-  command: node index.js
   persistenceMount: /data
   containerPort: 80
