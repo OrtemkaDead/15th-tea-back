@@ -8,8 +8,13 @@ const port = 80;
 
 // Ваш токен Telegram Bot и ID чата
 const TELEGRAM_BOT_TOKEN = '6904470937:AAGR2b495cT_PpLCycddClMZs52QyHobk_0';
-const TELEGRAM_CHAT_ID = '754544480';
-// const TELEGRAM_CHAT_ID = '6507907137';
+const TELEGRAM_CHAT_ID_ARTEM = '754544480';
+const TELEGRAM_CHAT_ID_ULIA = '6507907137';
+
+const ids = [
+    TELEGRAM_CHAT_ID_ARTEM,
+    TELEGRAM_CHAT_ID_ULIA,
+]
 
 // Middleware для парсинга тела запроса
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,20 +37,16 @@ app.post('/send-data', (req, res) => {
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
     // Отправка сообщения боту в Телеграмм
-    axios.post(url, {
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message,
-    })
-    .then(response => {
-        console.log('Message sent to Telegram');
-        res.status(200).send('Спасибо за заполнение формы 😀');
-    })
-    .catch(error => {
-        console.error('Error sending message:', error);
-        res.status(500).send('Произошла ошибка при отправке сообщения');
-    });
+    Promise.all(
+        ids.map(id => axios.post(url, {
+            chat_id: id,
+            text: message
+        }))
+    )
+    
+    res.status(200);
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log('Server is running');
 });
